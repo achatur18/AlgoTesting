@@ -11,6 +11,7 @@ class Saving:
         for strategy in strategies:
             returns = []
             for i in range(0, totaldays, freq): 
+                print(i)
                 start=dt.datetime.now()-dt.timedelta((i+freq))
                 end=dt.datetime.now()-dt.timedelta(i)
                 
@@ -29,24 +30,34 @@ class Saving:
 
                 bt.drop_na()
                 
+                ########################################################
+                ######## Implement strategy ########################
+                ################################################################
                 bt.implementStrategy(strategy=strategy)
                 bt.drop_na()
                 
                     
+                ########################################################
+                ######## Shifting labels ########################
+                ################################################################
                 flag_column='flag'
                 bt.ohlc_data[flag_column] = bt.ohlc_data[flag_column].shift(1)
                 bt.ohlc_data.fillna(0, inplace=True)
                 
+                
+                ########################################################
+                ######## Calculate returns ########################
+                ################################################################
                 bt.calculateTradeReturns(flag_column=flag_column, output_column='return_flag')
                 returns.append(bt.percentage_returns)
-                print("Returns on strategy: ", bt.percentage_returns)
-            d[strategy.__name__] = returns
+# =============================================================================
+#                 print("Returns on strategy: ", bt.percentage_returns)
+# =============================================================================
+            d[strategy.__name__] = returns[::-1]
         
         d=pd.DataFrame(d)
         d.to_csv(filename)
         
         d.cumprod().to_csv(filename.split('.')[0]+"_cum.csv")
 
-# =============================================================================
-#         return d
-# =============================================================================
+        return d

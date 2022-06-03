@@ -12,6 +12,6 @@ class Strategy:
             self.ohlc_data.fillna(0, inplace=True)
             
             self.calculateTradeReturns(flag_column=flag_column, output_column='return_flag')
-            print("Returns on {}: {}".format(str(strategy), self.percentage_returns))
+            print("Returns on {}: {}".format(str(strategy.__name__), self.percentage_returns))
             print("Accuracy of bids on strategy", self.calculateAccuracy("return_flag"))
             print("#"*30)

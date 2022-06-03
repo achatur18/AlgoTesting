@@ -52,8 +52,14 @@ class Returns:
             if(i!=0 and i>0):
                 break
             if(i!=0 and i<0):
+# =============================================================================
+#                 print("no closing bid found .... selling the holdings!!")
+#                 l[-1]=ohlc_data['Adj Close'][-1]
+# =============================================================================
+# =============================================================================
               print("no closing bid found .... closing the last opening!!")
               l[idx]=0
+# =============================================================================
               break
         ohlc_data[output_column]=l
         if type(df_dic)==type(pd.DataFrame):

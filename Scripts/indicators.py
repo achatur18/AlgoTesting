@@ -22,7 +22,7 @@ ticker='SOL-USD'
 
 #bt=BackTestingReg(ticker, startTime=start, endTime=end, interval='1m')
 
-bt=BackTestingReg(ticker, last_n_days=7, interval='1m')
+bt=BackTestingReg(ticker, last_n_days=2, interval='1m')
 
 target_col='trend'
 bt.movingLabel(label='trend', window=81, padding=4)
@@ -110,7 +110,7 @@ def superTrend2(d):
 ####### Implement strategy #######
 ##########################################
 bt.drop_na()
-bt.implementStrategy(strategy=macdStrategy)
+bt.implementStrategy(strategy=superTrendStrategy)
 bt.drop_na()
 
 ##########################################

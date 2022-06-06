@@ -32,6 +32,11 @@ def superTrendStrategy(d):
     d['flag'][(d['Supertrend']==False) & (temp==True)] = "SELL"
     return d
 
+def macdStrategy(d):
+    d['flag'] = "HOLD"
+    d['flag'][(d['macd']>=d['signal']) ] = "BUY" 
+    d['flag'][(d['macd']<d['signal']) ] = "SELL" 
+    return d
 
 bt=LivePaperTrading(ticker, last_n_days=1, interval='1m', strategy=superTrendStrategy)
 bt.setCash(100)
@@ -88,5 +93,7 @@ try:
 
 except KeyboardInterrupt:
     print('interrupted!')
-    
-sys.stdout.close()     
+# =============================================================================
+#     
+# sys.stdout.close()     
+# =============================================================================

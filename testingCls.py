@@ -19,17 +19,29 @@ from .utility import Utility
 from .labelspreparation import LabelsPreparation
 from .plots import Plot
 from .strategy import Strategy
+from .sampling import Sampling
     
-class BackTestingCls(Indicators, Returns, Metrics, Utility, LabelsPreparation, Plot, Strategy):
+class BackTestingCls(Indicators, Returns, Metrics, Utility, LabelsPreparation, Plot, Strategy, Sampling):
     def __init__(self, ticker='', last_n_days=10, interval='1d', startTime=None, endTime=None, strategy=None):
         self.ticker = ticker
         self.last_n_days = int(last_n_days)
         self.interval = interval
         self.startTime, self.endTime = self.getStartEndTime(self.last_n_days, startTime, endTime)
-        self.ohlc_data = self.get_data(self.ticker)
+# =============================================================================
+#         self.ohlc_data = self.get_data(self.ticker)
+# =============================================================================
         self.strategy = strategy
         self.percentage_returns = 0
-        self.get_indicators()
+        
+    def get_data2(self, ticker, startTime, endTime, interval):
+        if (len(ticker)==0):
+          print("No tickers provided!")
+          return {}          
+        start, end = startTime, endTime 
+        # looping over tickers and creating a dataframe with close prices
+        ohlc_mon = yf.download(ticker,start,end,interval=interval)
+        ohlc_mon.dropna(inplace=True,how="all")    
+        return ohlc_mon
     
     def get_data(self, ticker):
         if (len(ticker)==0):

@@ -34,7 +34,8 @@ class LivePaperTrading(BackTestingReg):
     def getSignalFromStrategy(self, col):
         return self.ohlc_data.tail(1)[col][0]
     
-    def getLatestPrice(self):
+    def getLatestPrice(self, data=None):
+        self.ohlc_data=data
         self.latestPrice = self.ohlc_data.tail(1)["Adj Close"][0]
         return self.latestPrice
         
